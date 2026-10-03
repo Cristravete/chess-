@@ -22,6 +22,8 @@ pieces = {
     'k': 'bK', 'q': 'bQ', 'r': 'bR', 'b': 'bB', 'n': 'bN', 'p': 'bP'
 }
 
+
+
 gameboard = [
     ["r", "n", "b", "q", "k", "b", "n", "r"],
     ["p", "p", "p", "p", "p", "p", "p", "p"],
@@ -35,8 +37,25 @@ gameboard = [
 
 alph = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
 
+def iswhite(piece):
+     return piece != '--' and piece.isupper()
+
+def isblack(piece):
+     return piece != '--' and piece.islower()
+
+def isally(p1,p2):
+     if p1 == '--' and p2 == '--':
+          return False
+
+     bothwhite = p1.isupper() and p2.isupper()
+     bothblack = p1.islower() and p2.islower()
+
+     return bothwhite or bothblack
+
+
 
 def board(screen):
+
     for row in range(8):
         for col in range(8):
             colour = light if (row + col)%2 == 0 else dark
@@ -53,7 +72,7 @@ def drawpieces(screen, board, square_size):
                 letters = pieces[piece]
                 
                 # Render text (black pieces drawn dark gray, white pieces drawn white/gold)
-                color = (40, 40, 40) if piece.islower() else (180, 40, 40)
+                color = (40, 40, 40) if piece.islower() else (180,40,40)
                 text_surface = font.render(letters, True, color)
                 
                 # Center the character inside the square
@@ -98,22 +117,30 @@ while running:
                              startr, startc = startpos
                              endr, endc = clickedpos
 
-                             gameboard[endr][endc] = gameboard[startr][startc]
-                             gameboard[startr][startc] = '--'
+                             startpiece = gameboard[startr][startc]
+                             endpiece = gameboard[endr][endc]
+                             
+                             if isally(startpiece, endpiece):
+                                     print('nono hun')
+                             else:
+                                     gameboard[endr][endc] = gameboard[startr][startc]
+                                     gameboard[startr][startc] = '--'
+                                     
+                                     activebox = None
+                                     startpos = None
 
-                             activebox = None
-                             startpos = None
-                        
-                 
-                 
-
-                 
+                            
             
     board(screen)
     drawpieces(screen, gameboard, squaresize)
 
-    #if activebox[0] != None and activebox[1] != None:
-         #pygame.draw.rect(board(screen), (255,0,0), activebox[0], activebox[1], 100, 100), 5
+    if activebox is not None:
+         row, col = activebox
+         x = col * squaresize + 80
+         y = row * squaresize + 80
+        
+         pygame.draw.rect(screen, (255,0,0), (x, y, squaresize, squaresize), 5)
+
     pygame.display.update()
 pygame.quit()
 
