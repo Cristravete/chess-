@@ -24,10 +24,6 @@ col = 0
 
 IMAGES = {}
 
-
-
-
-
 pieces = {
     'K': 'wK', 'Q': 'wQ', 'R': 'wR', 'B': 'wB', 'N': 'wN', 'P': 'wP',
     'k': 'bK', 'q': 'bQ', 'r': 'bR', 'b': 'bB', 'n': 'bN', 'p': 'bP'
@@ -144,6 +140,7 @@ while running:
                              
                              if isally(startpiece, endpiece):
                                      print('nono hun')
+                                     activebox = None
                              else:
                                      gameboard[endr][endc] = gameboard[startr][startc]
                                      gameboard[startr][startc] = '--'
@@ -165,7 +162,3 @@ while running:
 
     pygame.display.update()
 pygame.quit()
-
-
-
-
