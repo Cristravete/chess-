@@ -1,4 +1,9 @@
 import pygame
+import os
+import sys
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+os.chdir(BASE_DIR)
 
 pygame.init()
 
@@ -17,12 +22,16 @@ activebox = None
 row = 0
 col = 0
 
+IMAGES = {}
+
+
+
+
+
 pieces = {
     'K': 'wK', 'Q': 'wQ', 'R': 'wR', 'B': 'wB', 'N': 'wN', 'P': 'wP',
     'k': 'bK', 'q': 'bQ', 'r': 'bR', 'b': 'bB', 'n': 'bN', 'p': 'bP'
 }
-
-
 
 gameboard = [
     ["r", "n", "b", "q", "k", "b", "n", "r"],
@@ -36,6 +45,26 @@ gameboard = [
 ]
 
 alph = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
+
+def load_images():
+    """Loads piece images from the 'images' folder and scales them to fit squares."""
+    images_dir = os.path.join(BASE_DIR, "images")
+    
+    if not os.path.exists(images_dir):
+        print(f"Error: Could not find 'images' folder at: {images_dir}")
+        print("Please make sure your PNG files are inside an 'images' folder next to this script.")
+        sys.exit()
+
+    for key, filename in pieces.items():
+        file_path = os.path.join(images_dir, f"{filename}.png")
+        try:
+            image = pygame.image.load(file_path).convert_alpha()
+            IMAGES[key] = pygame.transform.scale(image, (squaresize, squaresize))
+        except pygame.error as e:
+            print(f"Error loading image '{file_path}': {e}")
+            sys.exit()
+
+load_images()
 
 def iswhite(piece):
      return piece != '--' and piece.isupper()
@@ -69,17 +98,10 @@ def drawpieces(screen, board, square_size):
         for col in range(8):
             piece = board[row][col]
             if piece != "--":
-                letters = pieces[piece]
+                x = col * square_size  + 80
+                y = row * square_size  + 80
                 
-                # Render text (black pieces drawn dark gray, white pieces drawn white/gold)
-                color = (40, 40, 40) if piece.islower() else (180,40,40)
-                text_surface = font.render(letters, True, color)
-                
-                # Center the character inside the square
-                x = (col * square_size  + (square_size - text_surface.get_width()) // 2 ) + 80
-                y = (row * square_size  + (square_size - text_surface.get_height()) // 2) + 80
-                
-                screen.blit(text_surface, (x, y))
+                screen.blit(IMAGES[piece], (x, y))
 
 def getposition(mouseclick):
     x,y = mouseclick
