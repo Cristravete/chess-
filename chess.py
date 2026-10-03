@@ -139,7 +139,6 @@ while running:
                              endpiece = gameboard[endr][endc]
                              
                              if isally(startpiece, endpiece):
-                                     print('nono hun')
                                      activebox = None
                              else:
                                      gameboard[endr][endc] = gameboard[startr][startc]
