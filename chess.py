@@ -18,6 +18,7 @@ clickedpos = None
 startpos = None
 endpos = None
 activebox = None
+turn = 1
 
 row = 0
 col = 0
@@ -127,10 +128,15 @@ while running:
              if clickedpos is not None:
                          if activebox is None:
                              r, c = clickedpos
-
-                             if gameboard[r][c] != '--':
+                             if turn == 1:
+                                 if gameboard[r][c] != '--' and gameboard[r][c].isupper():
+                                     startpos = clickedpos
+                                     activebox = clickedpos
+                                     turn = turn - 1
+                             elif gameboard[r][c] != '--' and gameboard[r][c].islower():
                                  startpos = clickedpos
                                  activebox = clickedpos
+                                 turn = turn + 1                            
                          else:
                              startr, startc = startpos
                              endr, endc = clickedpos
