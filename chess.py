@@ -123,6 +123,18 @@ while running:
         if event.type == pygame.QUIT:
             running = False  
 
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_r:
+             gameboard = [
+    ["r", "n", "b", "q", "k", "b", "n", "r"],
+    ["p", "p", "p", "p", "p", "p", "p", "p"],
+    ["--", "--", "--", "--", "--", "--", "--", "--"],
+    ["--", "--", "--", "--", "--", "--", "--", "--"],
+    ["--", "--", "--", "--", "--", "--", "--", "--"],
+    ["--", "--", "--", "--", "--", "--", "--", "--"],
+    ["P", "P", "P", "P", "P", "P", "P", "P"],
+    ["R", "N", "B", "Q", "K", "B", "N", "R"]
+]
+
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
              clickedpos = getposition(event.pos)
              if clickedpos is not None:
@@ -145,13 +157,24 @@ while running:
                              endpiece = gameboard[endr][endc]
                              
                              if isally(startpiece, endpiece):
-                                     activebox = None
+                                     activebox = clickedpos
                              else:
-                                     gameboard[endr][endc] = gameboard[startr][startc]
-                                     gameboard[startr][startc] = '--'
+                                     if turn == 1 and gameboard[startr][startc] == 'P':
+                                         if gameboard[endr][endc] == gameboard[startr][startc + 1] or gameboard[startr][startc + 2]:
+                                             gameboard[endr][endc] = gameboard[startr][startc]
+                                             gameboard[startr][startc] = '--'
                                      
-                                     activebox = None
-                                     startpos = None
+                                             activebox = None
+                                             startpos = None
+
+                                     else:
+                                          gameboard[endr][endc] = gameboard[startr][startc]
+                                          gameboard[startr][startc] = '--'
+                                                                               
+                                          activebox = None
+                                          startpos = None
+                                          
+                                          
 
                             
             
