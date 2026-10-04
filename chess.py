@@ -20,6 +20,7 @@ endpos = None
 activebox = None
 turn = 1
 
+
 row = 0
 col = 0
 
@@ -41,7 +42,7 @@ gameboard = [
     ["R", "N", "B", "Q", "K", "B", "N", "R"]
 ]
 
-alph = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
+alph = ['h', 'g', 'f', 'e', 'd', 'c', 'b', 'a']
 
 def load_images():
     """Loads piece images from the 'images' folder and scales them to fit squares."""
@@ -102,17 +103,17 @@ def drawpieces(screen, board, square_size):
 
 def getposition(mouseclick):
     x,y = mouseclick
+    
 
     col = (x - 80) // squaresize
     row = (y - 80) // squaresize
 
 
     if 0 <= row <= 8 and 0 <= col <= 8:
-    
-        #print(alph[row-1]+str(col +1))
+        numsys = {1: '8', 2: '7', 3: '6', 4: '5', 5: '4', 6: '3', 7: '2', 8: '1'}
+        print(alph[col - 1]+ str(numsys[row + 1]))
+             
         return row, col
-    
-    
     return None
     
 
@@ -159,21 +160,12 @@ while running:
                              if isally(startpiece, endpiece):
                                      activebox = clickedpos
                              else:
-                                     if turn == 1 and gameboard[startr][startc] == 'P':
-                                         if gameboard[endr][endc] == gameboard[startr][startc + 1] or gameboard[startr][startc + 2]:
-                                             gameboard[endr][endc] = gameboard[startr][startc]
-                                             gameboard[startr][startc] = '--'
-                                     
-                                             activebox = None
-                                             startpos = None
-
-                                     else:
-                                          gameboard[endr][endc] = gameboard[startr][startc]
-                                          gameboard[startr][startc] = '--'
-                                                                               
-                                          activebox = None
-                                          startpos = None
-                                          
+                                     gameboard[endr][endc] = startpiece
+                                     gameboard[startr][startc] = '--'
+                                                                              
+                                                                          
+                                     activebox = None
+                                     startpos = None
                                           
 
                             
