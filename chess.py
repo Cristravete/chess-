@@ -135,6 +135,7 @@ while running:
     ["P", "P", "P", "P", "P", "P", "P", "P"],
     ["R", "N", "B", "Q", "K", "B", "N", "R"]
 ]
+             turn = 1
 
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
              clickedpos = getposition(event.pos)
